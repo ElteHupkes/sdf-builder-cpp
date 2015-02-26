@@ -8,6 +8,8 @@
 #ifndef _SDFB_PARTS_H_
 #define _SDFB_PARTS_H_
 
+#include <sdf_builder/SdfBuilder.h>
+
 #include <sdf_builder/geometry/Box.h>
 #include <sdf_builder/Inertial.h>
 #include <sdf_builder/joint/FixedJoint.h>

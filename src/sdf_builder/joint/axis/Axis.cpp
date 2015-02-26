@@ -23,7 +23,9 @@ const Vector3& Axis::xyz() {
 }
 
 void Axis::xyz(const Vector3& vec) {
-	xyz_.set(vec.x(), vec.y(), vec.z());
+	xyz_[0] = vec[0];
+	xyz_[1] = vec[1];
+	xyz_[2] = vec[2];
 }
 
 std::string Axis::toXML() {
@@ -31,9 +33,9 @@ std::string Axis::toXML() {
 
 	out << "<" << tagName << ">"
 			<< "<xyz>"
-			<< nf(xyz_.x()) << ' '
-			<< nf(xyz_.y()) << ' '
-			<< nf(xyz_.z()) << ' '
+			<< nf(xyz_[0]) << ' '
+			<< nf(xyz_[1]) << ' '
+			<< nf(xyz_[2]) << ' '
 			<< "</xyz>"
 		<< "<use_parent_model_frame>"
 		<< (useParentModelFrame ? "1" : "0")

@@ -4,7 +4,6 @@
 #ifndef SDF_BUILDER_LINK_H_
 #define SDF_BUILDER_LINK_H_
 
-#include <boost/shared_ptr.hpp>
 #include <sdf_builder/Inertial.h>
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/PosableParent.h>

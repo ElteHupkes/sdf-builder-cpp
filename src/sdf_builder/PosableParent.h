@@ -5,8 +5,8 @@
 #ifndef SDF_BUILDER_POSABLEPARENT_H_
 #define SDF_BUILDER_POSABLEPARENT_H_
 
+#include <sdf_builder/SdfBuilder.h>
 #include <sdf_builder/Posable.h>
-#include <tol/SdfBuilder.h>
 
 namespace sdf_builder {
 

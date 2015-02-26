@@ -24,8 +24,8 @@ void Pose::setPosition(const Vector3& pos) {
  * should not be of zero length.
  */
 void Pose::setRotation(const Quaternion& rot) {
-	double len = rot.length();
-	rot_ = rot / len;
+	rot_ = rot;
+	rot_.normalize();
 }
 
 Vector3 Pose::position() {
@@ -41,7 +41,7 @@ Quaternion Pose::rotation() {
  * Return rotation as roll / pitch / yaw,
  * kindly taken from Gazebo.
  */
-osg::Vec3d Pose::rotationToEuler() {
+Vector3 Pose::rotationToEuler() {
 	  Vector3 vec;
 
 	  double w = rot_.w();

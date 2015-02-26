@@ -6,6 +6,7 @@
  */
 
 #include <sdf_builder/joint/RevoluteJoint.h>
+#include <iostream>
 
 namespace sdf_builder {
 

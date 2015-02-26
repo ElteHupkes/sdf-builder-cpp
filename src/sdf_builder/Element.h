@@ -9,7 +9,7 @@
 #define SDF_BUILDER_ELEMENT_H_
 
 // stdlib classes
-#include <tol/SdfBuilder.h>
+#include <sdf_builder/SdfBuilder.h>
 #include <string>
 #include <sstream> // Common to use for toXML
 

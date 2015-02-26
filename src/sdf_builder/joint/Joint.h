@@ -35,17 +35,17 @@ public:
 	/**
 	 * Link parent
 	 */
-	boost::shared_ptr< Link > parent;
+	LinkPtr parent;
 
 	/**
 	 * Link child
 	 */
-	boost::shared_ptr< Link > child;
+	LinkPtr child;
 
 	/**
 	 * Axis
 	 */
-	boost::shared_ptr< Axis > axis;
+	AxisPtr axis;
 
 };
 
