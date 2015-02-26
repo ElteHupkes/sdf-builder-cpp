@@ -54,6 +54,3 @@ file(GLOB_RECURSE
   SDFBUILDER_HEADERS
   sdf_builder/*.h
 )
-
-install(FILES ${SDFBUILDER_HEADERS}
-  DESTINATION "./include")
