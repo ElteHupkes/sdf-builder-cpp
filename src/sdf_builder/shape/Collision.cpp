@@ -9,16 +9,19 @@
 
 namespace sdf_builder {
 
-Collision::Collision(std::string nm):
-	Shape(nm)
-{}
-
-Collision::Collision(std::string nm, GeometryPtr geom):
-	Shape(nm, geom)
-{}
-
 Collision::~Collision()
 {}
+
+Collision * Collision::clone() const {
+	return new Collision(*this);
+}
+
+Collision & Collision::operator=(Collision other) {
+	using std::swap;
+
+	swap(*this, other);
+	return *this;
+}
 
 std::string Collision::toXML() {
 	std::stringstream out;

@@ -23,6 +23,14 @@ public:
 	virtual ~Element();
 
 	/**
+	 * Virtual constructor idiom; need to be able
+	 * to copy elements without knowing their type.
+	 *
+	 * http://stackoverflow.com/questions/1487238/copy-constructor-deep-copying-an-abstract-class
+	 */
+	virtual Element * clone() const = 0;
+
+	/**
 	 * Returns the full XML string representation
 	 * of this element.
 	 */

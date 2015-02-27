@@ -30,7 +30,21 @@ public:
 	 * Initializes a joint with parent / child links
 	 */
 	Joint(std::string name, LinkPtr parent, LinkPtr child);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Joint();
+
+	/**
+	 * Copy constructor
+	 */
+	Joint(const Joint & joint);
+
+	/**
+	 * Copy-swap for joints
+	 */
+	friend void swap(Joint & a, Joint & b);
 
 	/**
 	 * Link parent

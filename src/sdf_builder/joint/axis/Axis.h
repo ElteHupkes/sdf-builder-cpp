@@ -21,6 +21,26 @@ public:
 	virtual ~Axis();
 
 	/**
+	 * Copy constructor
+	 */
+	Axis(const Axis & a);
+
+	/**
+	 * Assignment operator
+	 */
+	Axis & operator=(Axis other);
+
+	/**
+	 * Return a copy of this axis element.
+	 */
+	virtual Axis * clone() const;
+
+	/**
+	 * Swap function for copy-and-swap
+	 */
+	friend void swap(Axis & a, Axis & b);
+
+	/**
 	 * Whether to use the parent model frame
 	 * for this axis.
 	 */

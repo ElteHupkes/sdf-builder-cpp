@@ -14,8 +14,9 @@ namespace sdf_builder {
 
 class Box: public Geometry {
 public:
-	explicit Box(double x = 1, double y = 1, double z = 1);
+	Box(double x = 1, double y = 1, double z = 1);
 	virtual ~Box();
+	virtual Box * clone() const;
 
 	/**
 	 * @return XML representation

@@ -14,9 +14,19 @@ namespace sdf_builder {
 
 class Collision: public Shape {
 public:
-	explicit Collision(std::string name);
-	Collision(std::string name, GeometryPtr geom);
+	// Inherit constructors
+	using Shape::Shape;
 	virtual ~Collision();
+
+	/**
+	 * Virtual copy constructor
+	 */
+	virtual Collision * clone() const;
+
+	/**
+	 * Copy-swap assignment operator
+	 */
+	Collision & operator=(Collision other);
 
 	/**
 	 * @return XML representation

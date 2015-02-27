@@ -19,9 +19,29 @@ public:
 	virtual ~Link();
 
 	/**
+	 * Copy constructor
+	 */
+	Link(const Link & other);
+
+	/**
+	 * Virtual copy constructor pattern
+	 */
+	virtual Link * clone() const;
+
+	/**
+	 * Copy-swap helper
+	 */
+	friend void swap(Link & a, Link & b);
+
+	/**
+	 * Assignment operator, copy-swap
+	 */
+	Link & operator=(Link other);
+
+	/**
 	 * Return XML representation
 	 */
-	std::string toXML();
+	virtual std::string toXML();
 
 	/**
 	 * Sets the inertial properties of the link

@@ -10,20 +10,21 @@
 
 namespace sdf_builder {
 
-RevoluteJoint::RevoluteJoint(std::string name):
-	Joint(name)
-{}
-
-RevoluteJoint::RevoluteJoint(LinkPtr parent, LinkPtr child):
-	Joint(parent, child)
-{}
-
-RevoluteJoint::RevoluteJoint(std::string name, LinkPtr parent, LinkPtr child):
-	Joint(name, parent, child)
-{}
+// Constructors are all inherited
 
 RevoluteJoint::~RevoluteJoint()
 {}
+
+RevoluteJoint * RevoluteJoint::clone() const {
+	return new RevoluteJoint(*this);
+}
+
+RevoluteJoint & RevoluteJoint::operator=(RevoluteJoint other) {
+	using std::swap;
+
+	swap(*this, other);
+	return *this;
+}
 
 std::string RevoluteJoint::toXML() {
 	std::stringstream out;

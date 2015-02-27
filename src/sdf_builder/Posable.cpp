@@ -15,6 +15,12 @@ Posable::Posable(std::string name):
 {}
 Posable::~Posable() {}
 
+// Copy constructor creates a new pose
+Posable::Posable(const Posable &posable):
+	name_(posable.name_),
+	pose_(PosePtr(posable.pose_->clone()))
+{}
+
 PosePtr Posable::pose() {
 	return pose_;
 }
@@ -33,6 +39,14 @@ void Posable::setPosition(const Vector3& pos) {
 
 void Posable::setRotation(const Quaternion &rot) {
 	this->pose_->setRotation(rot);
+}
+
+/**
+ * Swap behavior
+ */
+void swap(Posable & a, Posable & b) {
+	using std::swap;
+	swap(a.pose_, b.pose_);
 }
 
 } /* namespace sdf_builder */

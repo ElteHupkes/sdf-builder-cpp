@@ -25,7 +25,21 @@ public:
 	 */
 	explicit Shape(std::string name);
 	Shape(std::string name, GeometryPtr geom);
+
+	/**
+	 * Copy constructor, copies the geometry
+	 */
+	Shape(const Shape& other);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Shape();
+
+	/**
+	 * Swap for copy-and-swap
+	 */
+	friend void swap(Shape& a, Shape& b);
 
 	/**
 	 * @return The geometry of this shape

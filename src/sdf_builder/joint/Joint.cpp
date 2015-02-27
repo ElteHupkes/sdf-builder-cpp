@@ -28,7 +28,23 @@ Joint::Joint(std::string nm, LinkPtr parent, LinkPtr child):
 	axis(AxisPtr(new Axis))
 {}
 
+Joint::Joint(const Joint & joint):
+	Posable(joint),
+	axis(AxisPtr(joint.axis ? joint.axis->clone() : nullptr)),
+	child(LinkPtr(joint.child ? joint.child->clone() : nullptr)),
+	parent(LinkPtr(joint.parent ? joint.parent->clone() : nullptr))
+{}
+
 Joint::~Joint()
 {}
+
+void swap(Joint & a, Joint & b) {
+	using std::swap;
+
+	swap(static_cast<Posable &>(a), static_cast<Posable &>(b));
+	swap(a.axis, b.axis);
+	swap(a.child, b.child);
+	swap(a.parent, b.parent);
+}
 
 } /* namespace sdf_builder */

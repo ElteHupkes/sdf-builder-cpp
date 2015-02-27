@@ -19,10 +19,12 @@ namespace sdf_builder {
  */
 class FixedJoint: public RevoluteJoint {
 public:
-	explicit FixedJoint(std::string name);
-	FixedJoint(LinkPtr parent, LinkPtr child);
-	FixedJoint(std::string name, LinkPtr parent, LinkPtr child);
+	// Inherit constructors (C++11)
+	using RevoluteJoint::RevoluteJoint;
 	virtual ~FixedJoint();
+
+	// Do not override copy constructor / operator=,
+	// no fields are added to RevoluteJoint
 
 private:
 	/**

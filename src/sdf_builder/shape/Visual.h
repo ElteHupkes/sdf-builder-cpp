@@ -14,9 +14,18 @@ namespace sdf_builder {
 
 class Visual: public Shape {
 public:
-	explicit Visual(std::string name);
-	Visual(std::string name, GeometryPtr geom);
+	using Shape::Shape;
 	virtual ~Visual();
+
+	/**
+	 * Virtual copy constructor
+	 */
+	virtual Visual * clone() const;
+
+	/**
+	 * Assignment operator
+	 */
+	Visual & operator=(Visual other);
 
 	/**
 	 * @return XML representation

@@ -18,6 +18,11 @@ public:
 	Limit(double lower, double upper);
 	virtual ~Limit();
 
+	/**
+	 * Return a copy of this limit element.
+	 */
+	virtual Limit * clone() const;
+
 	double lower;
 	double upper;
 	double effort;

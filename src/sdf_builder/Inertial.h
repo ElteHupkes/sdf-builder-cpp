@@ -25,6 +25,11 @@ public:
 	void setCylinder(double mass, double radius, double height);
 
 	/**
+	 * Virtual copy constructor pattern
+	 */
+	Inertial * clone() const;
+
+	/**
 	 * Return XML representation
 	 */
 	std::string toXML();

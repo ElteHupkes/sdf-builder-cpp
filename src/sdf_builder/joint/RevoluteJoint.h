@@ -14,10 +14,16 @@ namespace sdf_builder {
 
 class RevoluteJoint: public Joint {
 public:
-	explicit RevoluteJoint(std::string name);
-	RevoluteJoint(std::string name, LinkPtr parent, LinkPtr child);
-	RevoluteJoint(LinkPtr parent, LinkPtr child);
+	// Inherit constructors (C++11)
+	using Joint::Joint;
 	virtual ~RevoluteJoint();
+
+	virtual RevoluteJoint * clone() const;
+
+	/**
+	 * Assignment operator
+	 */
+	RevoluteJoint & operator=(RevoluteJoint other);
 
 	/**
 	 * @return XML representation

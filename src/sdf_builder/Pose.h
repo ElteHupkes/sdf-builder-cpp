@@ -37,6 +37,11 @@ public:
 	void setRotation(const Quaternion& rot);
 
 	/**
+	 * Clone the pose
+	 */
+	virtual Pose * clone() const;
+
+	/**
 	 * Set rotation using roll / pitch / yaw
 	 */
 	//void setRotation(double roll, double pitch, double yaw);

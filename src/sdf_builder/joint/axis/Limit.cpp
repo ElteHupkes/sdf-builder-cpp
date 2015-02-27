@@ -29,6 +29,10 @@ Limit::Limit():
 Limit::~Limit()
 {}
 
+Limit * Limit::clone() const {
+	return new Limit(*this);
+}
+
 void Limit::init() {
 	effort = -1;
 	velocity = -1;

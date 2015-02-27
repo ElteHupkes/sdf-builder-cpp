@@ -16,6 +16,16 @@ public:
 	virtual ~PosableParent();
 
 	/**
+	 * Copy constructor
+	 */
+	PosableParent(const PosableParent & other);
+
+	/**
+	 * Copy / swap pattern
+	 */
+	friend void swap(PosableParent & a, PosableParent & b);
+
+	/**
 	 * Adds a new posable element to this model
 	 */
 	void addPosable( PosablePtr element );

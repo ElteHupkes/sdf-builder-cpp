@@ -18,6 +18,12 @@ public:
 	virtual ~Geometry();
 
 	/**
+	 * Need to define this so Geometries can also be cloned without
+	 * being cast to `Element`s.
+	 */
+	virtual Geometry * clone() const = 0;
+
+	/**
 	 * @return XML representation
 	 */
 	virtual std::string toXML() = 0;

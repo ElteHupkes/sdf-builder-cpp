@@ -9,16 +9,19 @@
 
 namespace sdf_builder {
 
-Visual::Visual(std::string nm):
-	Shape(nm)
-{}
-
-Visual::Visual(std::string nm, GeometryPtr geom):
-	Shape(nm, geom)
-{}
-
 Visual::~Visual()
 {}
+
+Visual * Visual::clone() const {
+	return new Visual(*this);
+}
+
+Visual & Visual::operator=(Visual other) {
+	using std::swap;
+
+	swap(*this, other);
+	return *this;
+}
 
 std::string Visual::toXML() {
 	std::stringstream out;

@@ -23,6 +23,26 @@ public:
 	virtual ~Model();
 
 	/**
+	 * Copy constructor
+	 */
+	Model(const Model & other);
+
+	/**
+	 * Virtual copy constructor
+	 */
+	virtual Model * clone() const;
+
+	/**
+	 * Copy-swap helper
+	 */
+	friend void swap(Model & a, Model & b);
+
+	/**
+	 * Assignment operator
+	 */
+	Model & operator=(Model other);
+
+	/**
 	 * Return XML representation
 	 */
 	std::string toXML();

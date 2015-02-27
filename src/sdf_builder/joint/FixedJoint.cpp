@@ -10,23 +10,7 @@
 
 namespace sdf_builder {
 
-FixedJoint::FixedJoint(std::string name):
-	RevoluteJoint(name)
-{
-	init();
-}
-
-FixedJoint::FixedJoint(LinkPtr parent, LinkPtr child):
-	RevoluteJoint(parent, child)
-{
-	init();
-}
-
-FixedJoint::FixedJoint(std::string name, LinkPtr parent, LinkPtr child):
-	RevoluteJoint(name, parent, child)
-{
-	init();
-}
+// Constructors are all inherited
 
 void FixedJoint::init() {
 	this->axis->limit.reset(new Limit(0, 0));

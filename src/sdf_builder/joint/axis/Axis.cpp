@@ -18,6 +18,41 @@ Axis::Axis():
 Axis::~Axis()
 {}
 
+Axis::Axis(const Axis & other):
+	Element(other),
+	useParentModelFrame(other.useParentModelFrame),
+	tagName(other.tagName),
+	limit(LimitPtr(other.limit ? other.limit->clone() : nullptr)),
+	xyz_(other.xyz_),
+	elements_(std::vector< ElementPtr >(other.elements_.size()))
+{
+	for (std::size_t i = 0; i < elements_.size(); ++i) {
+		if (other.elements_[i]) {
+			elements_[i].reset(other.elements_[i]->clone());
+		}
+	}
+}
+
+Axis & Axis::operator=(Axis other) {
+	swap(*this, other);
+	return *this;
+}
+
+// Swap for copy-and-swap
+void swap(Axis & a, Axis & b) {
+	using std::swap;
+
+	swap(a.useParentModelFrame, b.useParentModelFrame);
+	swap(a.tagName, b.tagName);
+	swap(a.limit, b.limit);
+	swap(a.xyz_, b.xyz_);
+	swap(a.elements_, b.elements_);
+}
+
+Axis *  Axis::clone() const {
+	return new Axis(*this);
+}
+
 const Vector3& Axis::xyz() {
 	return xyz_;
 }

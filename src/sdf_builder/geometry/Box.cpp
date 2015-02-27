@@ -17,6 +17,10 @@ Box::Box(double x, double y, double z):
 
 Box::~Box() {}
 
+Box * Box::clone() const {
+	return new Box(*this);
+}
+
 std::string Box::toXML() {
 	std::stringstream out;
 

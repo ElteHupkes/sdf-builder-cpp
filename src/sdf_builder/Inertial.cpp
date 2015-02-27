@@ -23,6 +23,10 @@ Inertial::Inertial():
 
 Inertial::~Inertial() {}
 
+Inertial * Inertial::clone() const {
+	return new Inertial(*this);
+}
+
 /**
  * @return XML representation of the inertial
  */

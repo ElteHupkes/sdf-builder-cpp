@@ -36,6 +36,9 @@ Quaternion Pose::rotation() {
 	return rot_;
 }
 
+Pose * Pose::clone() const {
+	return new Pose(*this);
+}
 
 /**
  * Return rotation as roll / pitch / yaw,

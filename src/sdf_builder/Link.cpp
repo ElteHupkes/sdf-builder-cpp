@@ -21,6 +21,31 @@ Link::Link(std::string nm) :
 Link::~Link()
 {}
 
+Link::Link(const Link & other):
+	Posable(other),
+	PosableParent(other),
+	selfCollide(other.selfCollide),
+	inertial_(InertialPtr(other.inertial_ ? other.inertial_->clone() : nullptr))
+{}
+
+Link * Link::clone() const {
+	return new Link(*this);
+}
+
+void swap(Link & a, Link & b) {
+	using std::swap;
+
+	swap(static_cast<Posable &>(a), static_cast<Posable &>(b));
+	swap(static_cast<PosableParent &>(a), static_cast<PosableParent &>(b));
+	swap(a.selfCollide, b.selfCollide);
+	swap(a.inertial_, b.inertial_);
+}
+
+Link & Link::operator=(Link other) {
+	swap(*this, other);
+	return *this;
+}
+
 void Link::inertial(InertialPtr inert) {
 	inertial_ = inert;
 }

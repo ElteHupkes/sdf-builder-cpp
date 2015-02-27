@@ -19,6 +19,11 @@ Shape::Shape(std::string name):
 	Shape(name, GeometryPtr(new Box))
 {}
 
+Shape::Shape(const Shape& other):
+	Posable(other),
+	geometry_(GeometryPtr(geometry_->clone()))
+{}
+
 Shape::~Shape() {}
 
 GeometryPtr Shape::geometry() {
@@ -27,6 +32,16 @@ GeometryPtr Shape::geometry() {
 
 void Shape::geometry(GeometryPtr geom) {
 	geometry_ = geom;
+}
+
+void swap(Shape & a, Shape & b) {
+	using std::swap;
+
+	// Call posable swap function
+	swap(static_cast< Posable& >(a), static_cast< Posable & >(b));
+
+	// Swap own fields
+	swap(a.geometry_, b.geometry_);
 }
 
 } /* namespace sdf_builder */

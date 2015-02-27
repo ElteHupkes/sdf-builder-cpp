@@ -20,6 +20,26 @@ public:
 	virtual ~Posable();
 
 	/**
+	 * Copy constructor, the pose of this element
+	 * needs to be deep-copied.
+	 */
+	Posable(const Posable &p);
+
+	/**
+	 * Swap function for copy-and-swap behavior.
+	 * See e.g. http://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+	 *
+	 * Child classes will have to implement the operator= (Posable is not constructable)
+	 */
+	friend void swap(Posable & a, Posable & b);
+
+	/**
+	 * Need to define this so Posables can also be cloned without
+	 * being cast to `Element`s.
+	 */
+	virtual Posable * clone() const = 0;
+
+	/**
 	 * @return Shared pointer to the Posable's pose
 	 */
 	PosePtr pose();
