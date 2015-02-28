@@ -15,6 +15,7 @@
 #include <sdf_builder/joint/FixedJoint.h>
 #include <sdf_builder/joint/RevoluteJoint.h>
 #include <sdf_builder/Link.h>
+#include <sdf_builder/PosableGroup.h>
 #include <sdf_builder/Model.h>
 #include <sdf_builder/Parts.h>
 #include <sdf_builder/Posable.h>

@@ -23,14 +23,17 @@ public:
 	using RevoluteJoint::RevoluteJoint;
 	virtual ~FixedJoint();
 
+	// Clone needs to be overridden
+	virtual FixedJoint * clone();
+
 	// Do not override copy constructor / operator=,
 	// no fields are added to RevoluteJoint
 
-private:
 	/**
-	 * Initializes the joint axis to zero movement
+	 * XML representation is overridden to force
+	 * the zero limit.
 	 */
-	void init();
+	virtual std::string toXML();
 };
 
 } /* namespace sdf_builder */

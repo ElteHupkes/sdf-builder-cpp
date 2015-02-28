@@ -12,10 +12,19 @@ namespace sdf_builder {
 
 // Constructors are all inherited
 
-void FixedJoint::init() {
-	this->axis->limit.reset(new Limit(0, 0));
+FixedJoint * FixedJoint::clone() {
+	return new FixedJoint(*this);
 }
 
 FixedJoint::~FixedJoint() {}
+
+/**
+ * I don't feel much like overriding all the constructors just
+ * to set the limit to zero; instead we'll just force it here.
+ */
+std::string FixedJoint::toXML() {
+	axis->limit.reset(new Limit(0, 0));
+	return RevoluteJoint::toXML();
+}
 
 } /* namespace sdf_builder */
