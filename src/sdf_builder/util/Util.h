@@ -10,8 +10,6 @@
 
 #include <sdf_builder/SdfBuilder.h>
 
-#define SDFUTIL_PARALLEL_EPSILON 1e-4
-
 namespace sdf_builder {
 
 class Util {
@@ -29,12 +27,6 @@ public:
 	 * local frame.
 	 */
 	static Vector3 toLocalFrame(const Vector3 & vec, Posable* me);
-
-	/**
-	 * Returns whether the given vectors are parallel up to epsilon
-	 * precision, and point in the same direction.
-	 */
-	static bool areVectorsParallel(const Vector3 & a, const Vector3 & b);
 private:
 	// Singleton
 	Util();

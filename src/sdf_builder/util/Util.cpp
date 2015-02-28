@@ -29,9 +29,4 @@ Vector3 Util::toLocalFrame(const Vector3 & vec, Posable* me) {
 	return rot * (vec - pos);
 }
 
-bool Util::areVectorsParallel(const Vector3 & a, const Vector3 & b) {
-	double v = a.dot(b) - (a.norm() * b.norm());
-	return abs(v) < SDFUTIL_PARALLEL_EPSILON;
-}
-
 } /* namespace sdf_builder */

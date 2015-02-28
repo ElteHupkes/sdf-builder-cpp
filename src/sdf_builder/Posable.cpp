@@ -8,6 +8,7 @@
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/util/Util.h>
 
+#include <iostream>
 #include <cmath>
 
 namespace sdf_builder {
@@ -53,10 +54,9 @@ const Quaternion & Posable::rotation() {
 }
 
 
-// This code is very much thanks to Robogen
 void Posable::align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
 		Vector3 at, Vector3 atNormal, Vector3 atTangent,
-		PosablePtr of, double angle, bool relativeToChildFrame) {
+		PosablePtr of, bool relativeToChildFrame) {
 
 	Posable* ofptr = of.get();
 	if (relativeToChildFrame == RELATIVE_TO_PARENT_FRAME) {
@@ -71,53 +71,48 @@ void Posable::align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
 		atTangent = Util::toLocalFrame(atTangent, ofptr);
 	}
 
-	// 1) Mirror atAxis to obtain axis pointing inward
-	auto invAtNormal = -atNormal;
-
-	// 2) Find quaternion to rotate myNormal to align with atNormal
-	auto rotAxisQuat = Quaternion::FromTwoVectors(
-			Util::toParentFrame(myNormal, this),
-			Util::toParentFrame(invAtNormal, ofptr)
+	// 1) Rotate to align myNormal with atNormal
+	// - Find quaternion to rotate myNormal to align
+	//   with the inverse of atNormal (pointing inwards)
+	// Note that Eigen3 handles the case of anti-parallel
+	// vectors for us!
+	auto alignNormal = Quaternion::FromTwoVectors(
+		Util::toParentFrame(myNormal, this),
+		Util::toParentFrame(-atNormal, ofptr)
 	);
-	this->rotation(rotAxisQuat);
 
-	// 3) `my` has been rotated, find the new position and calculate
-	//    the translation to align with `at`.
-	Vector3 rotatedMy = rotAxisQuat * my;
-	auto translation = Util::toParentFrame(at, ofptr) -
-			Util::toParentFrame(rotatedMy, this);
-	this->position(this->position() + translation);
+//	std::cerr << "rotation: " << alignNormal.w() << ' '
+//			<< alignNormal.x() << ' ' << alignNormal.y() << ' '
+//			<< alignNormal.z() << std::endl;
 
-	// TODO check axis are parallel
+	this->rotation(alignNormal);
 
-	// 4) Now we need to align with respect to the tangent vector
-	auto alignRot = Quaternion::FromTwoVectors(
+//	auto mtp = Util::toParentFrame(myTangent, this);
+//	std::cerr << "mtp " << mtp.x() << ' ' << mtp.y() << ' ' << mtp.z() << std::endl;
+
+	// 2) Rotate to align `myTangent` with `atTangent` in
+	//    a similar fashion as above.
+	auto alignTangent = Quaternion::FromTwoVectors(
 		Util::toParentFrame(myTangent, this),
 		Util::toParentFrame(atTangent, ofptr)
 	);
 
-	auto myNormalParent = Util::toParentFrame(myNormal, this);
+//	std::cerr << "rotation2: " << alignTangent.w() << ' '
+//			<< alignTangent.x() << ' ' << alignTangent.y() << ' '
+//			<< alignTangent.z() << std::endl;
 
-	alignRot.normalize();
-	AngleAxis aa(alignRot);
+	this->rotation(alignTangent);
 
-	// Check if the rotation angle is parallel to the normal;
-	// in which case we invert the rotation.
-	if (Util::areVectorsParallel(myNormalParent, -aa.axis())) {
-		aa = aa.inverse();
-	}
-
-	Quaternion tangentAlignRotation(aa);
-
-	if (abs(angle) > 1e-6) {
-		// Apply orientation w.r.t. the tangent
-		Quaternion rotOrientationQuat(AngleAxis(angle, myNormalParent));
-		this->rotation(tangentAlignRotation * rotOrientationQuat);
-	} else {
-		this->rotation(tangentAlignRotation);
-	}
+	// 3) Translate so that `my` lands at `at`
+	auto translation = Util::toParentFrame(at, ofptr)
+						- Util::toParentFrame(my, this);
+	position(position() + translation);
 
 	// TODO Check axis are parallel
+}
+
+void Posable::rotateAround(Vector3 vector, double angle, bool relativeToChildFrame) {
+	// TODO implement
 }
 
 /**

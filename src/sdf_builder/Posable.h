@@ -84,9 +84,9 @@ public:
 
 	/**
 	 * Rotates and translates this posable, such that the
-	 * ends of the vectors `my` and `at` touch, the
-	 * vectors `myNormal` and `atNormal` align, and the vectors
-	 * `myTangent` and `atTangent` align as well.
+	 * ends of the vectors `my` and `at` touch, aligning
+	 * both `myNormal` to `atNormal` as well as `myTangent`
+	 * to `atTangent`.
 	 *
 	 * The two posables need to be in the same parent frame
 	 * for this to work.
@@ -98,14 +98,21 @@ public:
 	 * @param Alignment vector of other posable normal to the connection point
 	 * @param Alignment vector of other posable tangent to the connection point
 	 * @param other posable
-	 * @param Angle of rotation around the normal vector with respect
-	 * 				to the tangent (in radians).
 	 * @param If true, all vectors are represented relative to the child frame
 	 * 		  rather than the parent frame.
 	 */
 	void align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
 			Vector3 at, Vector3 atNormal, Vector3 atTangent,
-			PosablePtr of, double angle = 0.0,
+			PosablePtr of, bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
+
+	/**
+	 * Performs a rotation around the given axis with the given angle.
+	 *
+	 * @param The vector to rotate around
+	 * @param The angle to rotate, in radians
+	 * @param Whether the given axis is in the child or the parent frame
+	 */
+	void rotateAround(Vector3 vector, double angle,
 			bool relativeToChildFrame = RELATIVE_TO_PARENT_FRAME);
 
 protected:
