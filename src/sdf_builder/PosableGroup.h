@@ -14,11 +14,11 @@
 namespace sdf_builder {
 
 /**
- * A PosableGroup is a Posable collection of posables which share a parent frame,
- * but are not necessarily the entire set of posables within the frame.
- * When the PosableGroup is translated or rotated, all the elements within
- * it are moved separately. This allows you to maintain a related set of
- * posables within a parent.
+ * A PosableGroup allows grouping a set of posables with the same parent
+ * without introducing a new coordinate frame (i.e. without putting
+ * them inside a link or a model). This lets you conveniently move
+ * the items within the group together, whilst their position remains
+ * relative to the groups parent.
  */
 class PosableGroup: public Posable, public PosableParent {
 public:

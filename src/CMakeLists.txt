@@ -30,7 +30,7 @@ file(GLOB_RECURSE
 add_definitions(-pedantic -Wno-long-long -Wall -Wextra -Wformat=2
                 -Wredundant-decls -Wwrite-strings -Wmissing-include-dirs 
                 -Wswitch-enum -Wuninitialized 
-                -Wswitch-default -Winit-self -Wshadow -Wfloat-equal -fPIC )
+                -Wswitch-default -Winit-self -Wfloat-equal -fPIC )
 
 # Use C++11
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

@@ -19,6 +19,9 @@ public:
 	explicit Posable(std::string name);
 	virtual ~Posable();
 
+	static const bool RELATIVE_TO_PARENT_FRAME = false;
+	static const bool RELATIVE_TO_CHILD_FRAME = true;
+
 	/**
 	 * Copy constructor, the pose of this element
 	 * needs to be deep-copied.
@@ -81,22 +84,29 @@ public:
 
 	/**
 	 * Rotates and translates this posable, such that the
-	 * ends of the vectors `my` and `at` touch, and the
-	 * vectors `myAxis` and `atAxis` align. See the
-	 * parameter description for the respective parameters'
-	 * frames.
+	 * ends of the vectors `my` and `at` touch, the
+	 * vectors `myNormal` and `atNormal` align, and the vectors
+	 * `myTangent` and `atTangent` align as well.
 	 *
 	 * The two posables need to be in the same parent frame
 	 * for this to work.
 	 *
-	 * @param Connection point at this posable, relative to the parent frame
-	 * @param Alignment vector of this posable, relative to the posable
-	 * @param Connection point of other posable, relative to the parent frame
-	 * @param Alignment vector of other posable, relative to the posable
+	 * @param Connection point at this posable
+	 * @param Alignment vector of this posable normal to the connection point
+	 * @param Alignment vector of this posable tangent to the connection point
+	 * @param Connection point of other posable
+	 * @param Alignment vector of other posable normal to the connection point
+	 * @param Alignment vector of other posable tangent to the connection point
 	 * @param other posable
+	 * @param Angle of rotation around the normal vector with respect
+	 * 				to the tangent (in radians).
+	 * @param If true, all vectors are represented relative to the child frame
+	 * 		  rather than the parent frame.
 	 */
-	void align(const Vector3& my, const Vector3& myAxis,
-			const Vector3& at, const Vector3& atAxis, PosablePtr of);
+	void align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
+			Vector3 at, Vector3 atNormal, Vector3 atTangent,
+			PosablePtr of, double angle = 0.0,
+			bool relativeToChildFrame = RELATIVE_TO_PARENT_FRAME);
 
 protected:
 	/**
