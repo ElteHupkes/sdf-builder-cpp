@@ -33,12 +33,20 @@ void Posable::name(std::string nm) {
 	name_ = nm;
 }
 
-void Posable::setPosition(const Vector3& pos) {
-	this->pose_->setPosition(pos);
+void Posable::position(const Vector3& pos) {
+	this->pose_->position(pos);
 }
 
-void Posable::setRotation(const Quaternion &rot) {
-	this->pose_->setRotation(rot);
+void Posable::rotation(const Quaternion &rot) {
+	this->pose_->rotation(rot);
+}
+
+const Vector3 & Posable::position() {
+	return this->pose_->position();
+}
+
+const Quaternion & Posable::rotation() {
+	return this->pose_->rotation();
 }
 
 /**

@@ -17,24 +17,24 @@ public:
 	~Pose();
 
 	/**
-	 * Returns a copy of the current position
+	 * Returns the current position
 	 */
-	Vector3 position();
+	const Vector3 & position();
 
 	/**
-	 * Returns a copy of the current rotation
+	 * Returns the current rotation
 	 */
-	Quaternion rotation();
+	const Quaternion & rotation();
 
 	/**
 	 * Sets x / y / z
 	 */
-	void setPosition(const Vector3& pos);
+	void position(const Vector3& pos);
 
 	/**
 	 * Set rotation using a quaternion
 	 */
-	void setRotation(const Quaternion& rot);
+	void rotation(const Quaternion& rot);
 
 	/**
 	 * Clone the pose

@@ -12,10 +12,14 @@ Pose::Pose() {}
 
 Pose::~Pose() {}
 
+Pose * Pose::clone() const {
+	return new Pose(*this);
+}
+
 /**
  * Sets x / y / z position.
  */
-void Pose::setPosition(const Vector3& pos) {
+void Pose::position(const Vector3& pos) {
 	pos_ = pos;
 }
 
@@ -23,21 +27,17 @@ void Pose::setPosition(const Vector3& pos) {
  * Sets the rotation quaternion. This vector
  * should not be of zero length.
  */
-void Pose::setRotation(const Quaternion& rot) {
+void Pose::rotation(const Quaternion& rot) {
 	rot_ = rot;
 	rot_.normalize();
 }
 
-Vector3 Pose::position() {
+const Vector3 & Pose::position() {
 	return pos_;
 }
 
-Quaternion Pose::rotation() {
+const Quaternion & Pose::rotation() {
 	return rot_;
-}
-
-Pose * Pose::clone() const {
-	return new Pose(*this);
 }
 
 /**

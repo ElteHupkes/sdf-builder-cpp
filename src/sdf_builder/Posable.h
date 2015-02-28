@@ -55,12 +55,11 @@ public:
 	void name(std::string name);
 
 	/**
-	 * Sets this link's x/y/z position. Changes the link's
-	 * pose object.
+	 * Sets this Posable's x/y/z position. Changes the Pose object.
 	 *
 	 * @param 3D position
 	 */
-	void setPosition(const Vector3& pos);
+	virtual void position(const Vector3& pos);
 
 	/**
 	 * Sets this link's rotation using a quaternion. Changes the
@@ -68,7 +67,36 @@ public:
 	 *
 	 * @param Orientation quaternion
 	 */
-	void setRotation(const Quaternion& rot);
+	virtual void rotation(const Quaternion& rot);
+
+	/**
+	 * Shortcut to the Pose's position
+	 */
+	const Vector3 & position();
+
+	/**
+	 * Shortcut to the Pose's rotation
+	 */
+	const Quaternion & rotation();
+
+	/**
+	 * Rotates and translates this posable, such that the
+	 * ends of the vectors `my` and `at` touch, and the
+	 * vectors `myAxis` and `atAxis` align. See the
+	 * parameter description for the respective parameters'
+	 * frames.
+	 *
+	 * The two posables need to be in the same parent frame
+	 * for this to work.
+	 *
+	 * @param Connection point at this posable, relative to the parent frame
+	 * @param Alignment vector of this posable, relative to the posable
+	 * @param Connection point of other posable, relative to the parent frame
+	 * @param Alignment vector of other posable, relative to the posable
+	 * @param other posable
+	 */
+	void align(const Vector3& my, const Vector3& myAxis,
+			const Vector3& at, const Vector3& atAxis, PosablePtr of);
 
 protected:
 	/**
