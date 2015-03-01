@@ -90,10 +90,10 @@ void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
 	Posable* ofptr = of.get();
 	auto myParentVec = relativeToChildFrame ?
 			Util::toParentDirection(my, this) :
-			Util::toParentDirection(Util::toLocalFrame(my, this), this);
+			my;
 	auto otherParentVec = relativeToChildFrame ?
 				Util::toParentDirection(other, ofptr) :
-				Util::toParentDirection(Util::toLocalFrame(other, ofptr), ofptr);
+				other;
 
 //	std::cerr << "Aligning:\n" << myParentVec
 //					  << "\nWith:\n" << otherParentVec
@@ -116,8 +116,8 @@ void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
 }
 
 void Posable::rotateAround(Vector3 axis, double angle, bool relativeToChildFrame) {
-	if (relativeToChildFrame) {
-		axis = Util::toLocalFrame(axis, this);
+	if (!relativeToChildFrame) {
+		axis = Util::toLocalDirection(axis, this);
 	}
 
 	Quaternion rot(AngleAxis(angle, axis));
