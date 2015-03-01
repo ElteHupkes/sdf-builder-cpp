@@ -91,6 +91,12 @@ public:
 	 * The two posables need to be in the same parent frame
 	 * for this to work.
 	 *
+	 * You can choose to specify the positions and orientations either in the parent
+	 * frame or in the child frame using the final argument to this method.
+	 * Be aware that representing orientation vectors in the parent frame
+	 * merely means that they are already rotated with respect to their parent,
+	 * not translated.
+	 *
 	 * @param Connection point at this posable
 	 * @param Alignment vector of this posable normal to the connection point
 	 * @param Alignment vector of this posable tangent to the connection point
@@ -98,11 +104,11 @@ public:
 	 * @param Alignment vector of other posable normal to the connection point
 	 * @param Alignment vector of other posable tangent to the connection point
 	 * @param other posable
-	 * @param If false, all vectors are represented relative to the child frame
-	 * 		  rather than the parent frame.
+	 * @param If false, all vectors are represented relative to the parent frame
+	 * 		  rather than the child frame.
 	 */
-	void align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
-			Vector3 at, Vector3 atNormal, Vector3 atTangent,
+	void align(const Vector3 & my, const Vector3 & myNormal, const Vector3 & myTangent,
+			const Vector3 & at, const Vector3 & atNormal, const Vector3 & atTangent,
 			PosablePtr of, bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
 
 	/**

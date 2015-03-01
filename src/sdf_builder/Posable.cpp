@@ -54,34 +54,31 @@ const Quaternion & Posable::rotation() {
 }
 
 
-void Posable::align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
-		Vector3 at, Vector3 atNormal, Vector3 atTangent,
+void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 & myTangent,
+		const Vector3 & at, const Vector3 & atNormal, const Vector3 & atTangent,
 		PosablePtr of, bool relativeToChildFrame) {
 
 	Posable* ofptr = of.get();
-	if (relativeToChildFrame == RELATIVE_TO_PARENT_FRAME) {
-		// Perform a one-time conversion of all the vectors
-		// to the child frame for convenience.
-		my = Util::toLocalFrame(my, this);
-		myNormal = Util::toLocalFrame(myNormal, this);
-		myTangent = Util::toLocalFrame(myTangent, this);
-		at = Util::toLocalFrame(at, ofptr);
-		atNormal = Util::toLocalFrame(atNormal, ofptr);
-		atTangent = Util::toLocalFrame(atTangent, ofptr);
-	}
+
+	// Convert my and at to local coordinates if not already so. This is
+	// important, since we need to be able to retrieve their positions
+	// later when some rotations have occurred.
+	// The only exception are the normals, which are used before any
+	// rotations.
+	auto myLocal = relativeToChildFrame ? my : Util::toLocalFrame(my, this);
+	auto atLocal = relativeToChildFrame ? at : Util::toLocalFrame(at, this);
+	auto myTangentLocal = relativeToChildFrame ? myTangent : Util::toLocalFrame(myTangent, this);
+	auto atTangentLocal = relativeToChildFrame ? atTangent : Util::toLocalFrame(atTangent, ofptr);
 
 	// 1) Rotate to align myNormal with atNormal
-	// - Find quaternion to rotate myNormal to align
-	//   with the inverse of atNormal (pointing inwards)
-	align(myNormal, -atNormal, of);
+	align(myNormal, -atNormal, of, relativeToChildFrame);
 
-	// 2) Rotate to align `myTangent` with `atTangent` in
-	//    a similar fashion as above.
-	align(myTangent, atTangent, of);
+	// 2) Rotate to align `myTangent` with `atTangent`
+	align(myTangentLocal, atTangentLocal, of, RELATIVE_TO_CHILD_FRAME);
 
 	// 3) Translate so that `my` lands at `at`
-	auto myPosition = Util::toParentFrame(my, this);
-	auto atPosition = Util::toParentFrame(at, ofptr);
+	auto myPosition = Util::toParentFrame(myLocal, this);
+	auto atPosition = Util::toParentFrame(atLocal, ofptr);
 	auto translation = atPosition - myPosition;
 	position(position() + translation);
 	// TODO Check axis are parallel

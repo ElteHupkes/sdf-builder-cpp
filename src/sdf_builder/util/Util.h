@@ -53,6 +53,14 @@ public:
 	static Vector3 toParentDirection(const Vector3 & vec, Posable* me);
 
 	/**
+	 * Returns the direction of the given vector in the local frame
+	 * @param The vector in the parent frame
+	 * @param The local
+	 * @return Vector with the direction of `vec` in the local frame
+	 */
+	static Vector3 toLocalDirection(const Vector3 & vec, Posable* me);
+
+	/**
 	 * Returns whether vectors a and b are parallel, antiparallel or
 	 * not parallel at all.
 	 *

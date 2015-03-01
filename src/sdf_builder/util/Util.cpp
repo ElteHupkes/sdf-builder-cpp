@@ -29,9 +29,14 @@ Vector3 Util::toLocalFrame(const Vector3 & vec, Posable* me) {
 	return rot * (vec - pos);
 }
 
-// This simply amounts to rotating the vector to the parent frame
+// This simply amounts to rotating the vector to the parent frame...
 Vector3 Util::toParentDirection(const Vector3 & vec, Posable* me) {
 	return me->rotation() * vec;
+}
+
+// ...and the other way around
+Vector3 Util::toLocalDirection(const Vector3 & vec, Posable* me) {
+	return me->rotation().conjugate() * vec;
 }
 
 // Initialize the epsilon
