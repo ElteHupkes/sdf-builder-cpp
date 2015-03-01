@@ -55,7 +55,7 @@ void PosableGroup::rotation(const Quaternion & rot) {
 	// Rotate children
 	std::vector<PosablePtr>::iterator it = this->posables_.begin();
 	for (; it != this->posables_.end(); ++it) {
-		PosablePtr child = (*it);
+		PosablePtr child = *it;
 		Vector3 curPosition = child->position();
 		Vector3 relPosition = curPosition - rootPosition;
 
@@ -66,6 +66,9 @@ void PosableGroup::rotation(const Quaternion & rot) {
 		Quaternion curRotation = child->rotation();
 		child->rotation(rot * curRotation);
 	}
+
+	// Store new rotation in pose
+	this->pose_->rotation(rot);
 }
 
 

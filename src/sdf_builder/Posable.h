@@ -98,12 +98,22 @@ public:
 	 * @param Alignment vector of other posable normal to the connection point
 	 * @param Alignment vector of other posable tangent to the connection point
 	 * @param other posable
-	 * @param If true, all vectors are represented relative to the child frame
+	 * @param If false, all vectors are represented relative to the child frame
 	 * 		  rather than the parent frame.
 	 */
 	void align(Vector3 my, Vector3 myNormal, Vector3 myTangent,
 			Vector3 at, Vector3 atNormal, Vector3 atTangent,
 			PosablePtr of, bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
+
+	/**
+	 * Rotates this posable such that the vector `my` aligns
+	 * with the vector `other` in the other posable `of`.
+	 * Note there are infinitely many ways of satisfying this constraint,
+	 * use `align` with a normal and a tangent to specify a unique rotation.
+	 * Posables should share a parent frame.
+	 */
+	void align(const Vector3 & my, const Vector3 & other, PosablePtr of,
+			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
 
 	/**
 	 * Performs a rotation around the given axis with the given angle.
