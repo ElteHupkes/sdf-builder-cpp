@@ -66,9 +66,9 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	// The only exception are the normals, which are used before any
 	// rotations.
 	auto myLocal = relativeToChildFrame ? my : Util::toLocalFrame(my, this);
-	auto atLocal = relativeToChildFrame ? at : Util::toLocalFrame(at, this);
-	auto myTangentLocal = relativeToChildFrame ? myTangent : Util::toLocalFrame(myTangent, this);
-	auto atTangentLocal = relativeToChildFrame ? atTangent : Util::toLocalFrame(atTangent, ofptr);
+	auto atLocal = relativeToChildFrame ? at : Util::toLocalFrame(at, ofptr);
+	auto myTangentLocal = relativeToChildFrame ? myTangent : Util::toLocalDirection(myTangent, this);
+	auto atTangentLocal = relativeToChildFrame ? atTangent : Util::toLocalDirection(atTangent, ofptr);
 
 	// 1) Rotate to align myNormal with atNormal
 	align(myNormal, -atNormal, of, relativeToChildFrame);
@@ -80,6 +80,7 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	auto myPosition = Util::toParentFrame(myLocal, this);
 	auto atPosition = Util::toParentFrame(atLocal, ofptr);
 	auto translation = atPosition - myPosition;
+
 	position(position() + translation);
 	// TODO Check axis are parallel
 }
