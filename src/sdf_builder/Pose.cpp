@@ -31,8 +31,7 @@ void Pose::position(const Vector3& pos) {
  * should not be of zero length.
  */
 void Pose::rotation(const Quaternion& rot) {
-	rot_ = rot;
-	rot_.normalize();
+	rot_ = rot.normalized();
 }
 
 const Vector3 & Pose::position() {
