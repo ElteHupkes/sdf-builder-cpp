@@ -65,7 +65,7 @@ void Link::makeBox(double mass, double x, double y, double z,
 	if (visual) {
 		// Create the collision box
 		BoxPtr box(new Box(x, y, z));
-		VisualPtr vis(new Visual("collision", box));
+		VisualPtr vis(new Visual("visual", box));
 		this->addPosable(vis);
 	}
 }
