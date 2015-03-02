@@ -19,6 +19,10 @@ RevoluteJoint * RevoluteJoint::clone() const {
 	return new RevoluteJoint(*this);
 }
 
+RevoluteJoint * RevoluteJoint::create(std::string name, PosablePtr parent, PosablePtr child) {
+	return new RevoluteJoint(name, parent, child);
+}
+
 RevoluteJoint & RevoluteJoint::operator=(RevoluteJoint other) {
 	using std::swap;
 

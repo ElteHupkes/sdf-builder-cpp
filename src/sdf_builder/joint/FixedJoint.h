@@ -23,8 +23,9 @@ public:
 	using RevoluteJoint::RevoluteJoint;
 	virtual ~FixedJoint();
 
-	// Clone needs to be overridden
+	// Virtual copy / create need to be overridden
 	virtual FixedJoint * clone();
+	virtual FixedJoint * create(std::string name, PosablePtr parent, PosablePtr child);
 
 	// Do not override copy constructor / operator=,
 	// no fields are added to RevoluteJoint

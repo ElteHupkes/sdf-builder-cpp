@@ -16,6 +16,10 @@ FixedJoint * FixedJoint::clone() {
 	return new FixedJoint(*this);
 }
 
+FixedJoint * FixedJoint::create(std::string name, PosablePtr parent, PosablePtr child) {
+	return new FixedJoint(name, parent, child);
+}
+
 FixedJoint::~FixedJoint() {}
 
 /**

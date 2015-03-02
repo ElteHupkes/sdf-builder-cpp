@@ -14,14 +14,14 @@ Joint::Joint(std::string nm):
 	Posable(nm)
 {}
 
-Joint::Joint(LinkPtr parent, LinkPtr child):
+Joint::Joint(PosablePtr parent, PosablePtr child):
 	Posable("joint_"+parent->name()+"_"+child->name()),
 	parent(parent),
 	child(child),
 	axis(AxisPtr(new Axis))
 {}
 
-Joint::Joint(std::string nm, LinkPtr parent, LinkPtr child):
+Joint::Joint(std::string nm, PosablePtr parent, PosablePtr child):
 	Posable(nm),
 	parent(parent),
 	child(child),
@@ -31,8 +31,8 @@ Joint::Joint(std::string nm, LinkPtr parent, LinkPtr child):
 Joint::Joint(const Joint & joint):
 	Posable(joint),
 	axis(AxisPtr(joint.axis ? joint.axis->clone() : nullptr)),
-	child(LinkPtr(joint.child ? joint.child->clone() : nullptr)),
-	parent(LinkPtr(joint.parent ? joint.parent->clone() : nullptr))
+	child(PosablePtr(joint.child ? joint.child->clone() : nullptr)),
+	parent(PosablePtr(joint.parent ? joint.parent->clone() : nullptr))
 {}
 
 Joint::~Joint()

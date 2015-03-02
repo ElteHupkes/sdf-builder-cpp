@@ -21,6 +21,11 @@ public:
 	virtual RevoluteJoint * clone() const;
 
 	/**
+	 * Virtual constructor
+	 */
+	virtual RevoluteJoint * create(std::string name, PosablePtr parent, PosablePtr child);
+
+	/**
 	 * Assignment operator
 	 */
 	RevoluteJoint & operator=(RevoluteJoint other);

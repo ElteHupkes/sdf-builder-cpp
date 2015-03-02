@@ -24,12 +24,17 @@ public:
 	/**
 	 * Initializes a joint, composing name from parent and child
 	 */
-	Joint(LinkPtr parent, LinkPtr child);
+	Joint(PosablePtr parent, PosablePtr child);
 
 	/**
 	 * Initializes a joint with parent / child links
 	 */
-	Joint(std::string name, LinkPtr parent, LinkPtr child);
+	Joint(std::string name, PosablePtr parent, PosablePtr child);
+
+	/**
+	 * Virtual constructor
+	 */
+	virtual Joint * create(std::string name, PosablePtr parent, PosablePtr child) = 0;
 
 	/**
 	 * Destructor
@@ -47,14 +52,16 @@ public:
 	friend void swap(Joint & a, Joint & b);
 
 	/**
-	 * Link parent
+	 * Link parent. Note that this is defined as a posable
+	 * rather than a link for generality and so we can avoid
+	 * downcasting during a clone.
 	 */
-	LinkPtr parent;
+	PosablePtr parent;
 
 	/**
 	 * Link child
 	 */
-	LinkPtr child;
+	PosablePtr child;
 
 	/**
 	 * Axis

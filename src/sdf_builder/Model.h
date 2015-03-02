@@ -7,6 +7,7 @@
 // stdlib libraries
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/PosableParent.h>
+
 #include <string>
 #include <vector>
 
@@ -43,6 +44,16 @@ public:
 	Model & operator=(Model other);
 
 	/**
+	 * Add a joint
+	 */
+	void addJoint(JointPtr joint);
+
+	/**
+	 * Returns the joints in this model
+	 */
+	const std::vector<JointPtr> & joints();
+
+	/**
 	 * Return XML representation
 	 */
 	std::string toXML();
@@ -52,6 +63,11 @@ protected:
 	 * property in the world.
 	 */
 	bool isStatic_;
+
+	/**
+	 * List of joints in this model
+	 */
+	std::vector<JointPtr> joints_;
 };
 
 } /* namespace sdf */
