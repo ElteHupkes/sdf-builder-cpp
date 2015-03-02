@@ -32,7 +32,7 @@ class Joint;
 typedef Eigen::Vector3d Vector3;
 typedef Eigen::Quaterniond Quaternion;
 typedef Eigen::AngleAxisd AngleAxis;
-typedef std::shared_ptr< Model > SdfModelPtr;
+typedef std::shared_ptr< Model > ModelPtr;
 typedef std::shared_ptr< Link > LinkPtr;
 typedef std::shared_ptr< PosableGroup > PosableGroupPtr;
 typedef std::shared_ptr< Shape > ShapePtr;
