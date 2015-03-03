@@ -68,8 +68,8 @@ void PosableGroup::rotation(const Quaternion & rot) {
 		Vector3 origPosition = invRotation * (child->position() - rootPosition);
 
 		// New position means rotating the original point according
-		// to the new rotation.
-		Vector3 newPosition = rot * origPosition;
+		// to the new rotation, and adding the current position
+		Vector3 newPosition = (rot * origPosition) + rootPosition;
 
 		// Original rotation
 		Quaternion origRotation = invRotation * child->rotation();
