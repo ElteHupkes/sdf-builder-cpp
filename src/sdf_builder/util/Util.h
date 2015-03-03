@@ -67,6 +67,16 @@ public:
 	 * @return One of `ANTIPARALLEL`, `NOT_PARALLEL` or `PARALLEL`
 	 */
 	static short vectorParallellism(const Vector3 & a, const Vector3 & b);
+
+	/**
+	 * A more friendly vector representation
+	 */
+	static std::string vecToString(const Vector3 & vec);
+
+	/**
+	 * A more friendly quaternion representation
+	 */
+	static std::string quatToString(const Quaternion & quat);
 private:
 	// Singleton
 	Util();

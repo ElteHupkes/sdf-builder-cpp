@@ -9,6 +9,7 @@
 #include <sdf_builder/Posable.h>
 
 #include <cmath>
+#include <sstream>
 
 namespace sdf_builder {
 
@@ -51,6 +52,19 @@ short Util::vectorParallellism(const Vector3 & a, const Vector3 & b) {
 	} else {
 		return NOT_PARALLEL;
 	}
+}
+
+std::string Util::vecToString(const Vector3& vec) {
+	std::stringstream out;
+	out << '(' << vec.x() << ", " << vec.y() << ", " << vec.z() << ')';
+	return out.str();
+}
+
+std::string Util::quatToString(const Quaternion& quat) {
+	std::stringstream out;
+	out << '(' << quat.w() << ", " << quat.x()
+		<< ", " << quat.y() << ", " << quat.z() << ')';
+	return out.str();
 }
 
 } /* namespace sdf_builder */

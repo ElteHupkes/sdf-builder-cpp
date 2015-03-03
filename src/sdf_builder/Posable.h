@@ -117,9 +117,16 @@ public:
 	 * Note there are infinitely many ways of satisfying this constraint,
 	 * use `align` with a normal and a tangent to specify a unique rotation.
 	 * Posables should share a parent frame.
+	 *
+	 * @param Child vector to align
+	 * @param Other vector to align
+	 * @param Other object
+	 * @param Whether vectors are relative to the child or parent frame
+	 * @param Vector used for rotation if `my` and `other` are opposite vectors.
 	 */
 	void align(const Vector3 & my, const Vector3 & other, PosablePtr of,
-			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
+			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME,
+			const Vector3 & fallback = Vector3(0, 0, 0));
 
 	/**
 	 * Performs a rotation around the given axis with the given angle.

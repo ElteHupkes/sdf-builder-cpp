@@ -69,12 +69,13 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	auto atLocal = relativeToChildFrame ? at : Util::toLocalFrame(at, ofptr);
 	auto myTangentLocal = relativeToChildFrame ? myTangent : Util::toLocalDirection(myTangent, this);
 	auto atTangentLocal = relativeToChildFrame ? atTangent : Util::toLocalDirection(atTangent, ofptr);
+	auto fallback = relativeToChildFrame ? myNormal : Util::toLocalDirection(myNormal, this);
 
 	// 1) Rotate to align myNormal with atNormal
 	align(myNormal, -atNormal, of, relativeToChildFrame);
 
 	// 2) Rotate to align `myTangent` with `atTangent`
-	align(myTangentLocal, atTangentLocal, of, RELATIVE_TO_CHILD_FRAME);
+	align(myTangentLocal, atTangentLocal, of, RELATIVE_TO_CHILD_FRAME, fallback);
 
 	// 3) Translate so that `my` lands at `at`
 	auto myPosition = Util::toParentFrame(myLocal, this);
@@ -86,7 +87,7 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 }
 
 void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
-		bool relativeToChildFrame) {
+		bool relativeToChildFrame, const Vector3 & fallback) {
 
 	Posable* ofptr = of.get();
 	auto myParentVec = relativeToChildFrame ?
@@ -96,24 +97,19 @@ void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
 				Util::toParentDirection(other, ofptr) :
 				other;
 
-//	std::cerr << "Aligning:\n" << myParentVec
-//					  << "\nWith:\n" << otherParentVec
-//					  << std::endl;
-
-	if (Util::PARALLEL == Util::vectorParallellism(myParentVec, otherParentVec)) {
+	auto parallel = Util::vectorParallellism(myParentVec, otherParentVec);
+	if (Util::PARALLEL == parallel) {
 		// Nothing needs to happen.
 		return;
+	} else if (Util::OPPOSITE == parallel && fallback.norm() > 0.01) {
+		// Opposite vectors with nonzero fallback vector; rotate
+		// PI degrees along the fallback vector.
+		this->rotateAround(fallback, M_PI, relativeToChildFrame);
+	} else {
+		// Eigen3 handles the case of opposite vectors
+		Quaternion rot = Quaternion::FromTwoVectors(myParentVec, otherParentVec);
+		this->rotation(rot);
 	}
-
-	// Eigen3 handles the case of opposite vectors
-	Quaternion rot = Quaternion::FromTwoVectors(myParentVec, otherParentVec);
-//	std::cerr << "Rotation: "
-//			<< rot.w() << ' '
-//			<< rot.x() << ' '
-//			<< rot.y() << ' '
-//			<< rot.z() << std::endl;
-
-	this->rotation(rot);
 }
 
 void Posable::rotateAround(Vector3 axis, double angle, bool relativeToChildFrame) {
@@ -122,7 +118,7 @@ void Posable::rotateAround(Vector3 axis, double angle, bool relativeToChildFrame
 	}
 
 	Quaternion rot(AngleAxis(angle, axis));
-	rotation(rotation() * rot);
+	rotation(rot * rotation());
 }
 
 /**
