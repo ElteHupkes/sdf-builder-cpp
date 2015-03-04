@@ -10,6 +10,8 @@
 
 #include <sdf_builder/SdfBuilder.h>
 
+#include <sdf_builder/Element.h>
+#include <sdf_builder/StringElement.h>
 #include <sdf_builder/geometry/Box.h>
 #include <sdf_builder/Inertial.h>
 #include <sdf_builder/joint/FixedJoint.h>

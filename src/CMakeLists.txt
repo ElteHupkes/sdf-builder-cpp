@@ -48,9 +48,3 @@ target_link_libraries(sdfbuilder ${SDFB_DEPS})
 # Test executable
 add_executable(test sdf_builder/test/test.cpp)
 target_link_libraries(test sdfbuilder ${SDFB_DEPS})
-
-# Create include directory with headers
-file(GLOB_RECURSE
-  SDFBUILDER_HEADERS
-  sdf_builder/*.h
-)
