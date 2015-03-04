@@ -3,6 +3,7 @@
  */
 
 #include <sdf_builder/PosableParent.h>
+#include <sstream>
 
 namespace sdf_builder {
 
@@ -32,6 +33,17 @@ void PosableParent::addPosable( PosablePtr element ) {
 
 const std::vector< PosablePtr > & PosableParent::posables() {
 	return posables_;
+}
+
+std::string PosableParent::toXML() {
+	std::stringstream out;
+
+	auto it = posables_.begin();
+	for (; it != posables_.end(); ++it) {
+		out << (*it)->toXML() << '\n';
+	}
+
+	return out.str();
 }
 
 } /* namespace sdf_builder */

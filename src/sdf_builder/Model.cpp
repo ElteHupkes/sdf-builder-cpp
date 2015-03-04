@@ -18,6 +18,7 @@ Model::~Model() {}
 Model::Model(const Model & other):
 	Posable(other),
 	PosableParent(other),
+	ElementParent(other),
 	isStatic_(other.isStatic_),
 	joints_(std::vector< JointPtr >(other.joints_.size()))
 {
@@ -83,13 +84,14 @@ std::string Model::toXML() {
 			<< "<static>" << (isStatic_ ? "true" : "false") << "</static>"
 			<< pose_->toXML();
 
-	for (int i = 0, l = posables_.size(); i < l; ++i) {
-		out << posables_[i]->toXML() << '\n';
+	out << PosableParent::toXML();
+
+	auto it = joints_.begin();
+	for (; it != joints_.end(); ++it) {
+		out << (*it)->toXML() << '\n';
 	}
 
-	for (int i = 0, l = joints_.size(); i < l; ++i) {
-		out << joints_[i]->toXML() << '\n';
-	}
+	out << ElementParent::toXML();
 
 	out << "</model>" << '\n';
 	return out.str();

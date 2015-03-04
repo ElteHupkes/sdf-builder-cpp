@@ -34,6 +34,12 @@ public:
 	 * @return Posable elements in this parent
 	 */
 	const std::vector< PosablePtr > & posables();
+
+	/**
+	 * Convenience method to output all posables in their
+	 * XML form.
+	 */
+	virtual std::string toXML();
 protected:
 	/**
 	 * List of posable elements in the model

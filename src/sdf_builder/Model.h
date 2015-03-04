@@ -4,21 +4,21 @@
 #ifndef SDF_MODEL_H_
 #define SDF_MODEL_H_
 
-// stdlib libraries
-#include <sdf_builder/Posable.h>
-#include <sdf_builder/PosableParent.h>
-
+// stdlib
 #include <string>
 #include <vector>
 
-// SDF builder libraries
+// sdfbuilder
+#include <sdf_builder/Posable.h>
+#include <sdf_builder/PosableParent.h>
+#include <sdf_builder/ElementParent.h>
 
 namespace sdf_builder {
 
 /**
  * An SDF model
  */
-class Model : public Posable, public PosableParent  {
+class Model : public Posable, public PosableParent, public ElementParent  {
 public:
 	explicit Model(std::string name);
 	virtual ~Model();
