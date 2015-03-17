@@ -14,7 +14,7 @@ namespace sdf_builder {
 
 Link::Link(std::string nm) :
 	Posable(nm),
-	selfCollide(true),
+	selfCollide(false),
 	inertial_(InertialPtr(new Inertial))
 {}
 

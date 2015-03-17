@@ -63,7 +63,7 @@ public:
 
 	/**
 	 * Whether or not the link can collide with other
-	 * links in the model (defaults to true here!)
+	 * links in the model (defaults to false)
 	 */
 	bool selfCollide;
 
