@@ -56,6 +56,9 @@ void Inertial::setBox(double mass, double x, double y, double z) {
 	iyy = r * (x * x + z * z);
 	iyz = 0;
 	izz = r * (x * x + y * y);
+
+	// Set own mass
+	this->mass = mass;
 }
 
 void Inertial::setCylinder(double mass, double radius, double height) {
