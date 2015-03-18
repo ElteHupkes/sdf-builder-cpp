@@ -107,7 +107,7 @@ public:
 	 * @param If false, all vectors are represented relative to the parent frame
 	 * 		  rather than the child frame.
 	 */
-	void align(const Vector3 & my, const Vector3 & myNormal, const Vector3 & myTangent,
+	virtual void align(const Vector3 & my, const Vector3 & myNormal, const Vector3 & myTangent,
 			const Vector3 & at, const Vector3 & atNormal, const Vector3 & atTangent,
 			PosablePtr of, bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
 
@@ -124,7 +124,7 @@ public:
 	 * @param Whether vectors are relative to the child or parent frame
 	 * @param Vector used for rotation if `my` and `other` are opposite vectors.
 	 */
-	void align(const Vector3 & my, const Vector3 & other, PosablePtr of,
+	virtual void align(const Vector3 & my, const Vector3 & other, PosablePtr of,
 			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME,
 			const Vector3 & fallback = Vector3(0, 0, 0));
 
@@ -135,7 +135,7 @@ public:
 	 * @param The angle to rotate, in radians
 	 * @param Whether the given axis is in the child or the parent frame
 	 */
-	void rotateAround(Vector3 vector, double angle,
+	virtual void rotateAround(Vector3 vector, double angle,
 			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
 
 protected:
