@@ -136,7 +136,7 @@ public:
 	 * @param Whether the given axis is in the child or the parent frame
 	 */
 	void rotateAround(Vector3 vector, double angle,
-			bool relativeToChildFrame = RELATIVE_TO_PARENT_FRAME);
+			bool relativeToChildFrame = RELATIVE_TO_CHILD_FRAME);
 
 protected:
 	/**
