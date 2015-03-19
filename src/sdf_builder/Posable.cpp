@@ -63,19 +63,28 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	// Convert my and at to local coordinates if not already so. This is
 	// important, since we need to be able to retrieve their positions
 	// later when some rotations have occurred.
-	// The only exception are the normals, which are used before any
-	// rotations.
 	auto myLocal = relativeToChildFrame ? my : Util::toLocalFrame(my, this);
 	auto atLocal = relativeToChildFrame ? at : Util::toLocalFrame(at, ofptr);
 	auto myTangentLocal = relativeToChildFrame ? myTangent : Util::toLocalDirection(myTangent, this);
 	auto atTangentLocal = relativeToChildFrame ? atTangent : Util::toLocalDirection(atTangent, ofptr);
-	auto fallback = relativeToChildFrame ? myNormal : Util::toLocalDirection(myNormal, this);
+	auto myNormalLocal = relativeToChildFrame ? myNormal : Util::toLocalDirection(myNormal, this);
+	auto atNormalLocal = relativeToChildFrame ? atNormal : Util::toLocalDirection(atNormal, ofptr);
 
 	// 1) Rotate to align myNormal with atNormal
 	align(myNormal, -atNormal, of, relativeToChildFrame);
 
-	// 2) Rotate to align `myTangent` with `atTangent`
-	align(myTangentLocal, atTangentLocal, of, RELATIVE_TO_CHILD_FRAME, fallback);
+	// 2) The normals now aligned, and the tangent vectors should be orthonormal
+	//    to these vectors. That means that in order to match up the tangent vectors,
+	//    we only need to rotate around the tangent vector. First, calculate the
+	//    correct angle to do so:
+	auto myTangentParent = Util::toParentDirection(myTangentLocal, this).normalized();
+	auto atTangentParent = Util::toParentDirection(atTangentLocal, ofptr).normalized();
+	double angle = acos(myTangentParent.dot(atTangentParent));
+
+	// perform the rotation only if necessary
+	if (fabs(angle) > Util::PARALLEL_EPSILON) {
+		this->rotateAround(myNormalLocal, -angle, Posable::RELATIVE_TO_CHILD_FRAME);
+	}
 
 	// 3) Translate so that `my` lands at `at`
 	auto myPosition = Util::toParentFrame(myLocal, this);
@@ -83,7 +92,25 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	auto translation = atPosition - myPosition;
 
 	position(position() + translation);
-	// TODO Check axis are parallel
+
+	// Verify the axes are correctly aligned
+	auto normalsParallel = Util::vectorParallellism(
+		Util::toParentDirection(myNormalLocal, this),
+		Util::toParentDirection(-atNormalLocal, ofptr)
+	);
+
+	auto tangentsParallel = Util::vectorParallellism(
+		Util::toParentDirection(myTangentLocal, this),
+		Util::toParentDirection(atTangentLocal, ofptr)
+	);
+
+	if (Util::PARALLEL != normalsParallel) {
+		std::cerr << "`Posable::align()`: Normal vectors failed to align! Were input vectors orthonormal?" << std::endl;
+	}
+
+	if (Util::PARALLEL != tangentsParallel) {
+		std::cerr << "`Posable::align()`: Tangent vectors failed to align! Were input vectors orthonormal?" << std::endl;
+	}
 }
 
 void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
