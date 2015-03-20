@@ -30,6 +30,7 @@ class Joint;
 
 // Typedefs
 typedef Eigen::Vector3d Vector3;
+typedef Eigen::Matrix3d RotationMatrix;
 typedef Eigen::Quaterniond Quaternion;
 typedef Eigen::AngleAxisd AngleAxis;
 typedef std::shared_ptr< Model > ModelPtr;

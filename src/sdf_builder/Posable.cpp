@@ -53,7 +53,8 @@ const Quaternion & Posable::rotation() {
 	return this->pose_->rotation();
 }
 
-
+// Use this:
+//
 void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 & myTangent,
 		const Vector3 & at, const Vector3 & atNormal, const Vector3 & atTangent,
 		PosablePtr of, bool relativeToChildFrame) {
@@ -70,47 +71,71 @@ void Posable::align(const Vector3 & my, const Vector3 & myNormal, const Vector3 
 	auto myNormalLocal = relativeToChildFrame ? myNormal : Util::toLocalDirection(myNormal, this);
 	auto atNormalLocal = relativeToChildFrame ? atNormal : Util::toLocalDirection(atNormal, ofptr);
 
-	// 1) Rotate to align myNormal with atNormal
-	align(myNormal, -atNormal, of, relativeToChildFrame);
+	// This explains how we can do the alignment easily:
+	// http://stackoverflow.com/questions/21828801/how-to-find-correct-rotation-from-one-vector-to-another
 
-	// 2) The normals now aligned, and the tangent vectors should be orthonormal
-	//    to these vectors. That means that in order to match up the tangent vectors,
-	//    we only need to rotate around the tangent vector. First, calculate the
-	//    correct angle to do so:
-	auto myTangentParent = Util::toParentDirection(myTangentLocal, this).normalized();
-	auto atTangentParent = Util::toParentDirection(atTangentLocal, ofptr).normalized();
-	double angle = acos(myTangentParent.dot(atTangentParent));
+	// We define coordinate systems in which "normal", "tangent" and "normal x tangent" are
+	// the x, y and z axis (normal x tangent is the cross product). We then determine two
+	// rotation matrices, one for the rotation of the standard basis to "my" (R1):
+	auto myXref = Util::toParentDirection(myNormalLocal, this).normalized();
+	auto myYref = Util::toParentDirection(myTangentLocal, this).normalized();
+	auto myZref = myXref.cross(myYref);
 
-	// perform the rotation only if necessary
-	if (fabs(angle) > Util::PARALLEL_EPSILON) {
-		this->rotateAround(myNormalLocal, -angle, Posable::RELATIVE_TO_CHILD_FRAME);
+	// and one for the rotation of "at" (R2):
+	auto atXref = Util::toParentDirection(-atNormalLocal, ofptr).normalized();
+	auto atYref = Util::toParentDirection(atTangentLocal, ofptr).normalized();
+	auto atZref = atXref.cross(atYref);
+
+	// Note that, provided the input vectors were orthogonal, these matrices
+	// are orthonormal. Now we want to provide the rotation matrix from
+	// R1 to R2. The easiest way to visualize this is if we first perform
+	// the inverse rotation from R1 back to the standard basis, and then
+	// rotate to R2. Since R1/R2 are orthonormal, their inverse is their
+	// transpose, so we initialize r1 by rows rather than columns:
+	RotationMatrix r1;
+	r1.row(0) = myXref;
+	r1.row(1) = myYref;
+	r1.row(2) = myZref;
+
+	// R2 is just initialized by columns
+	RotationMatrix r2;
+	r2.col(0) = atXref;
+	r2.col(1) = atYref;
+	r2.col(2) = atZref;
+
+	// Use R2 * R2 to produce the quaternion rotation
+	Quaternion quat(r2 * r1);
+	this->rotation(quat);
+
+	// Verify the axes are correctly aligned
+	auto myParentNormal = Util::toParentDirection(myNormalLocal, this);
+	auto atParentNormal = Util::toParentDirection(-atNormalLocal, ofptr);
+	auto normalsParallel = Util::vectorParallellism(myParentNormal, atParentNormal);
+
+	if (Util::PARALLEL != normalsParallel) {
+		std::cerr << "`Posable::align()`: Normal vectors failed to align! Were input vectors orthogonal?" << std::endl;
+		std::cerr << "Cosine of angle: "
+				  << myParentNormal.dot(atParentNormal)
+				  << std::endl;
 	}
 
-	// 3) Translate so that `my` lands at `at`
+	auto myParentTangent = Util::toParentDirection(myTangentLocal, this);
+	auto atParentTangent = Util::toParentDirection(atTangentLocal, ofptr);
+	auto tangentsParallel = Util::vectorParallellism(myParentTangent, atParentTangent);
+
+	if (Util::PARALLEL != tangentsParallel) {
+		std::cerr << "`Posable::align()`: Tangent vectors failed to align! Were input vectors orthogonal?" << std::endl;
+		std::cerr << "Cosine of angle: "
+				  << myParentTangent.dot(atParentTangent)
+				  << std::endl;
+	}
+
+	// Finally, translate so that `my` lands at `at`
 	auto myPosition = Util::toParentFrame(myLocal, this);
 	auto atPosition = Util::toParentFrame(atLocal, ofptr);
 	auto translation = atPosition - myPosition;
 
 	position(position() + translation);
-
-	// Verify the axes are correctly aligned
-	auto normalsParallel = Util::vectorParallellism(
-		Util::toParentDirection(myNormalLocal, this),
-		Util::toParentDirection(-atNormalLocal, ofptr)
-	);
-
-	auto tangentsParallel = Util::vectorParallellism(
-		Util::toParentDirection(myTangentLocal, this),
-		Util::toParentDirection(atTangentLocal, ofptr)
-	);
-
-	if (Util::PARALLEL != normalsParallel) {
-		std::cerr << "`Posable::align()`: Normal vectors failed to align! Were input vectors orthonormal?" << std::endl;
-	}
-
-	if (Util::PARALLEL != tangentsParallel) {
-		std::cerr << "`Posable::align()`: Tangent vectors failed to align! Were input vectors orthonormal?" << std::endl;
-	}
 }
 
 void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
