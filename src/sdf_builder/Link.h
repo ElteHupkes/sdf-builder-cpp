@@ -7,13 +7,14 @@
 #include <sdf_builder/Inertial.h>
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/PosableParent.h>
+#include <sdf_builder/ElementParent.h>
 
 namespace sdf_builder {
 
 /**
  * A link represents a collection of body parts
  */
-class Link : public Posable, public PosableParent  {
+class Link : public Posable, public PosableParent, public ElementParent  {
 public:
 	explicit Link(std::string name);
 	virtual ~Link();

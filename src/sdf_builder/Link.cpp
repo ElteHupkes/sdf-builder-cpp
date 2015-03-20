@@ -24,6 +24,7 @@ Link::~Link()
 Link::Link(const Link & other):
 	Posable(other),
 	PosableParent(other),
+	ElementParent(other),
 	selfCollide(other.selfCollide),
 	inertial_(InertialPtr(other.inertial_ ? other.inertial_->clone() : nullptr))
 {}
@@ -77,16 +78,12 @@ std::string Link::toXML() {
 	std::stringstream out;
 
 	out << "<link name=\"" << name_ << "\">";
+	out << "<self_collide>" << selfCollide << "</self_collide>";
 	out << pose_->toXML() << '\n';
 	out << inertial_->toXML() << '\n';
 
-	for (int i = 0, l = posables_.size(); i < l; ++i) {
-		out << posables_[i]->toXML() << '\n';
-	}
-
-	out << "<self_collide>"
-		<< (selfCollide ? "1" : "0")
-		<< "</self_collide>";
+	out << PosableParent::toXML() << '\n';
+	out << ElementParent::toXML() << '\n';
 
 	out << "</link>" << '\n';
 	return out.str();
