@@ -5,11 +5,12 @@
  *      Author: elte
  */
 
-#ifndef SDF_BUILDER_SHAPE_SHAPE_H_
-#define SDF_BUILDER_SHAPE_SHAPE_H_
+#ifndef SDF_BUILDER_COLLISION_SHAPE_H_
+#define SDF_BUILDER_COLLISION_SHAPE_H_
 
 #include <sdf_builder/geometry/Geometry.h>
 #include <sdf_builder/Posable.h>
+#include <sdf_builder/ElementParent.h>
 
 namespace sdf_builder {
 
@@ -17,7 +18,7 @@ namespace sdf_builder {
  * Shape is used by both visual and collision elements. A shape
  * should have a certain geometry.
  */
-class Shape: public Posable {
+class Shape: public Posable, public ElementParent {
 public:
 	/**
 	 * Default constructor initializes the shape with
@@ -60,4 +61,4 @@ protected:
 
 } /* namespace sdf_builder */
 
-#endif /* SDF_BUILDER_SHAPE_SHAPE_H_ */
+#endif /* SDF_BUILDER_COLLISION_SHAPE_H_ */

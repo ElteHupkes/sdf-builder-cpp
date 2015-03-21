@@ -8,7 +8,7 @@
 #ifndef TOL_SDF_SHAPE_VISUAL_H_
 #define TOL_SDF_SHAPE_VISUAL_H_
 
-#include <sdf_builder/shape/Shape.h>
+#include <sdf_builder/collision/Shape.h>
 
 namespace sdf_builder {
 

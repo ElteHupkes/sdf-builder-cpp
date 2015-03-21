@@ -5,7 +5,7 @@
  *      Author: elte
  */
 
-#include <sdf_builder/shape/Visual.h>
+#include <sdf_builder/collision/Visual.h>
 
 namespace sdf_builder {
 
@@ -29,6 +29,7 @@ std::string Visual::toXML() {
 	out << "<visual name=\"" << name_ << "\">"
 			<< pose_->toXML()
 			<< geometry_->toXML()
+			<< ElementParent::toXML()
 			<< "</visual>";
 
 	return out.str();

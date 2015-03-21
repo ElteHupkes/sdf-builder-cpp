@@ -5,10 +5,10 @@
  *      Author: elte
  */
 
-#ifndef SDF_BUILDER_SHAPE_COLLISION_H_
-#define SDF_BUILDER_SHAPE_COLLISION_H_
+#ifndef SDF_BUILDER_COLLISION_COLLISION_H_
+#define SDF_BUILDER_COLLISION_COLLISION_H_
 
-#include <sdf_builder/shape/Shape.h>
+#include <sdf_builder/collision/Shape.h>
 
 namespace sdf_builder {
 
@@ -32,8 +32,13 @@ public:
 	 * @return XML representation
 	 */
 	virtual std::string toXML();
+
+	/**
+	 * Optional surface element
+	 */
+	SurfacePtr surface;
 };
 
 } /* namespace sdf_builder */
 
-#endif /* SDF_BUILDER_SHAPE_COLLISION_H_ */
+#endif /* SDF_BUILDER_COLLISION_COLLISION_H_ */

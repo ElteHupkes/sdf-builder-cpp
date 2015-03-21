@@ -5,8 +5,8 @@
  *      Author: elte
  */
 
+#include <sdf_builder/collision/Shape.h>
 #include <sdf_builder/geometry/Box.h>
-#include <sdf_builder/shape/Shape.h>
 
 namespace sdf_builder {
 
@@ -20,6 +20,7 @@ Shape::Shape(std::string name):
 {}
 
 Shape::Shape(const Shape& other):
+	ElementParent(other),
 	Posable(other),
 	geometry_(GeometryPtr(geometry_->clone()))
 {}

@@ -5,7 +5,8 @@
  *      Author: elte
  */
 
-#include <sdf_builder/shape/Collision.h>
+#include <sdf_builder/collision/Collision.h>
+#include <sdf_builder/collision/Surface.h>
 
 namespace sdf_builder {
 
@@ -27,9 +28,15 @@ std::string Collision::toXML() {
 	std::stringstream out;
 
 	out << "<collision name=\"" << name_ << "\">"
-			<< pose_->toXML()
-			<< geometry_->toXML()
-			<< "</collision>";
+		<< pose_->toXML()
+		<< geometry_->toXML()
+		<< ElementParent::toXML();
+
+	if (surface) {
+		out << surface->toXML();
+	}
+
+	out << "</collision>";
 
 	return out.str();
 }

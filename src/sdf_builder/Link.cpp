@@ -2,10 +2,10 @@
  * TODO License
  */
 // stdlib
+#include <sdf_builder/collision/Collision.h>
+#include <sdf_builder/collision/Visual.h>
 #include <sdf_builder/geometry/Box.h>
 #include <sdf_builder/Link.h>
-#include <sdf_builder/shape/Collision.h>
-#include <sdf_builder/shape/Visual.h>
 #include <sstream>
 
 // sdfbuilder
