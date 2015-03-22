@@ -29,6 +29,7 @@ class Limit;
 class Joint;
 class Surface;
 class Friction;
+class StringElement;
 
 // Typedefs
 typedef Eigen::Vector3d Vector3;
@@ -52,6 +53,7 @@ typedef std::shared_ptr< Limit > LimitPtr;
 typedef std::shared_ptr< Joint > JointPtr;
 typedef std::shared_ptr< Surface > SurfacePtr;
 typedef std::shared_ptr< Friction > FrictionPtr;
+typedef std::shared_ptr< StringElement > StringElementPtr;
 
 }
 
