@@ -14,7 +14,7 @@ namespace sdf_builder {
 Friction::Friction():
 	friction1(1),
 	friction2(1),
-	fdir1(Vector3()),
+	fdir1(Vector3(0, 0, 0)),
 	slip1(0),
 	slip2(0),
 	rollingFriction(1)
