@@ -10,6 +10,7 @@ namespace sdf_builder {
 
 Pose::Pose():
 	// Initialize as identity quaternion
+	pos_(Vector3(0, 0, 0)),
 	rot_(Quaternion(1, 0, 0, 0))
 {}
 
