@@ -13,7 +13,11 @@ namespace sdf_builder {
 
 Sensor::Sensor(std::string name, std::string type):
 	Posable(name),
-	type(type)
+	type(type),
+	alwaysOn(false),
+	updateRate(0),
+	visualize(false),
+	topic("__default__")
 {}
 
 Sensor::~Sensor() {}
@@ -30,6 +34,16 @@ std::string Sensor::toXML() {
 	std::stringstream out;
 
 	out << "<sensor name=\"" << name_ << "\" type\"" << type << "\">";
+	out << pose_->toXML();
+
+	out << "<always_on>" << alwaysOn << "</always_on>";
+	out << "<update_rate>" << updateRate << "</update_rate>";
+	out << "<visualize>" << visualize << "</visualize>";
+
+	if (topic != "__default__") {
+		out << "<topic>" << topic << "</topic>";
+	}
+
 	out << this->sensorXML();
 	out << ElementParent::toXML();
 	out << "</sensor>";

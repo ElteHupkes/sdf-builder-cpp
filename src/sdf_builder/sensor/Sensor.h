@@ -35,6 +35,11 @@ public:
 	 */
 	std::string type;
 
+	bool alwaysOn;
+	double updateRate;
+	bool visualize;
+	std::string topic;
+
 protected:
 	/**
 	 * The specific XML for this sensor, override in
