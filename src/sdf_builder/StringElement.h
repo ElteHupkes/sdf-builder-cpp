@@ -20,15 +20,22 @@ class StringElement: public Element {
 public:
 	StringElement();
 	StringElement(const std::string & contents);
-	StringElement(const StringElement & other);
 	virtual ~StringElement();
 	virtual StringElement * clone() const;
-	friend void swap(StringElement & a, StringElement & b);
-
-	StringElement & operator=(StringElement other);
 
 	virtual std::string toXML();
+
+	/**
+	 * Element contents
+	 */
 	std::string contents;
+
+	/**
+	 * If you want, you can assign a value here to
+	 * identify your element by. Not rendered in
+	 * any way.
+	 */
+	std::string id;
 };
 
 } /* namespace sdf_builder */

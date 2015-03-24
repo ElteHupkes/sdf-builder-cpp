@@ -7,6 +7,7 @@
 
 #include <sdf_builder/ElementParent.h>
 #include <sdf_builder/Element.h>
+#include <sdf_builder/StringElement.h>
 
 namespace sdf_builder {
 
@@ -32,6 +33,11 @@ void swap(ElementParent & a, ElementParent & b) {
 
 void ElementParent::addElement( ElementPtr element ) {
 	elements_.push_back(element);
+}
+
+void ElementParent::addString(std::string contents) {
+	ElementPtr elem(new StringElement(contents));
+	this->addElement(elem);
 }
 
 const std::vector< ElementPtr > & ElementParent::elements() {

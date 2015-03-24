@@ -30,6 +30,7 @@ class Joint;
 class Surface;
 class Friction;
 class StringElement;
+class Sensor;
 
 // Typedefs
 typedef Eigen::Vector3d Vector3;
@@ -54,6 +55,7 @@ typedef std::shared_ptr< Joint > JointPtr;
 typedef std::shared_ptr< Surface > SurfacePtr;
 typedef std::shared_ptr< Friction > FrictionPtr;
 typedef std::shared_ptr< StringElement > StringElementPtr;
+typedef std::shared_ptr< Sensor > SensorPtr;
 
 }
 

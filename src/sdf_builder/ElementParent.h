@@ -33,6 +33,12 @@ public:
 	virtual void addElement( ElementPtr element );
 
 	/**
+	 * Shortcut method to add a string element with the given
+	 * contents.
+	 */
+	virtual void addString(std::string contents);
+
+	/**
 	 * @return Posable elements in this parent
 	 */
 	const std::vector< ElementPtr > & elements();
