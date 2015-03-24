@@ -33,7 +33,7 @@ Sensor * Sensor::clone() const {
 std::string Sensor::toXML() {
 	std::stringstream out;
 
-	out << "<sensor name=\"" << name_ << "\" type\"" << type << "\">";
+	out << "<sensor name=\"" << name_ << "\" type=\"" << type << "\">";
 	out << pose_->toXML();
 
 	out << "<always_on>" << alwaysOn << "</always_on>";
