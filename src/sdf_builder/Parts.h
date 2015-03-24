@@ -8,9 +8,10 @@
 #ifndef _SDFB_PARTS_H_
 #define _SDFB_PARTS_H_
 
+#include <sdf_builder/SdfBuilder.h>
+
 #include <sdf_builder/collision/Collision.h>
 #include <sdf_builder/collision/Visual.h>
-#include <sdf_builder/SdfBuilder.h>
 
 #include <sdf_builder/Element.h>
 #include <sdf_builder/StringElement.h>
@@ -25,5 +26,6 @@
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/PosableParent.h>
 #include <sdf_builder/Pose.h>
+#include <sdf_builder/sensor/Sensor.h>
 
 #endif
