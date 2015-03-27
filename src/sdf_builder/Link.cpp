@@ -51,24 +51,30 @@ void Link::inertial(InertialPtr inert) {
 	inertial_ = inert;
 }
 
-void Link::makeBox(double mass, double x, double y, double z,
-		bool collision, bool visual) {
+PosableGroupPtr Link::makeBox(double mass, double x, double y, double z,
+		bool collision, bool visual, std::string namePrefix) {
 	// Give our inertial box properties
 	inertial_->setBox(mass, x, y, z);
+
+	// Create a posable group for these elements
+	PosableGroupPtr group(new PosableGroup(namePrefix+"group"));
 
 	if (collision) {
 		// Create the collision box
 		BoxPtr box(new Box(x, y, z));
-		CollisionPtr col(new Collision("collision", box));
-		this->addPosable(col);
+		CollisionPtr col(new Collision(namePrefix + "collision", box));
+		group->addPosable(col);
 	}
 
 	if (visual) {
 		// Create the collision box
 		BoxPtr box(new Box(x, y, z));
-		VisualPtr vis(new Visual("visual", box));
-		this->addPosable(vis);
+		VisualPtr vis(new Visual(namePrefix + "visual", box));
+		group->addPosable(vis);
 	}
+
+	this->addPosable(group);
+	return group;
 }
 
 /**

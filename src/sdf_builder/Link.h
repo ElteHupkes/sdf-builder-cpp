@@ -8,6 +8,7 @@
 #include <sdf_builder/Posable.h>
 #include <sdf_builder/PosableParent.h>
 #include <sdf_builder/ElementParent.h>
+#include <sdf_builder/PosableGroup.h>
 
 namespace sdf_builder {
 
@@ -58,9 +59,14 @@ public:
 	 * @param z size
 	 * @param collision If true, also creates a box collision object
 	 * @param visual If true, also creates a box visual object
+	 * @param namePrefix By default, the created elements will simply
+	 * 					 be called "visual" and "collision". You can prefix
+	 * 					 these names with the given name prefix.
+	 * @return Pointer to a posable group containing the generated collision /
+	 * 		   visual elements (if applicable) in that order.
 	 */
-	void makeBox(double mass, double x, double y, double z,
-			bool collision = true, bool visual = true);
+	PosableGroupPtr makeBox(double mass, double x, double y, double z,
+			bool collision = true, bool visual = true, std::string namePrefix = "");
 
 	/**
 	 * Whether or not the link can collide with other
