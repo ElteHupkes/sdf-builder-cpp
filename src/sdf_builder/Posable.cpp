@@ -165,8 +165,8 @@ void Posable::align(const Vector3 & my, const Vector3 & other, PosablePtr of,
 }
 
 void Posable::rotateAround(Vector3 axis, double angle, bool relativeToChildFrame) {
-	if (!relativeToChildFrame) {
-		axis = Util::toLocalDirection(axis, this);
+	if (relativeToChildFrame) {
+		axis = Util::toParentDirection(axis, this);
 	}
 
 	Quaternion rot(AngleAxis(angle, axis));
