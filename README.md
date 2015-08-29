@@ -1,3 +1,6 @@
+# Library unmaintained
+I no longer maintain this library, because creating SDF from C++ this way seems cumbersome. Please have a look at my Python library instead: https://github.com/ElteHupkes/sdf-builder
+
 # SDF Builder
 SDF Builder is a utility library to programatically define SDF model files and output them as XML.
 While I was generating Gazebo robots for my thesis research, I found it was cumbersome to write SDF manually. Since for my evolving robots I needed a programmatic way of generating these SDF bots using C++.
